@@ -34,7 +34,7 @@ const generateAccessAndRefereshTokens = async (userId) => {
 const registerUser = asyncHandler(async (req, res) => {
 
   const { username,email,phone,password } = req.body;
-
+  console.log(req.body);
   if (
     [phone,email, username, password].some((field) => field?.trim() === "")
   ) 
@@ -72,16 +72,13 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
 
-  const { email, username, password } = req.body;
+  const { email,password } = req.body;
   console.log(email);
 
-  if (!username && !email) {
-    throw new ApiError(400, "username or email is required");
+  if (!email) {
+    throw new ApiError(400, "email is required");
   }
-
-  const user = await User.findOne({
-    $or: [{ username }, { email }],
-  });
+  const user = await User.findOne({email})
 
   if (!user) {
     throw new ApiError(404, "User does not exist");
@@ -103,7 +100,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: true
   };
 
   return res

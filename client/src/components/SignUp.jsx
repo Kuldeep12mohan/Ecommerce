@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/logo.webp";
+import logo from "../assets/GirlCart.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import OtpInput from "otp-input-react";
@@ -34,7 +34,10 @@ const Signup = () => {
     try {
       const data = await user.confirm(otp);
       console.log(data);
-      const response = await axios.post("http://localhost:3001/api/v1/users/register",{username,email,phone:ph,password})
+      const response = await axios.post(
+        "http://localhost:3001/api/v1/users/register",
+        { username, email, phone: ph, password }
+      );
       console.log(response);
       navigate("/login");
     } catch (error) {
@@ -46,9 +49,14 @@ const Signup = () => {
     <>
       {!user ? (
         <div className="flex justify-center items-center h-screen">
-          <div className="border-4 p-5 shadow-md flex justify-around rounded-lg items-center">
+          <div className="border-4 p-4 shadow-md flex justify-around rounded-lg items-center">
             <div className="w-full md:w-1/2">
-              <div className="text-3xl mb-4 font-bold">SignUp</div>
+              <div className="text-3xl mb-4 font-bold">
+                Welcome to{" "}
+                <span className="bg-gradient-to-r from-orange-400 to-yellow-500 text-transparent bg-clip-text">
+                  UnifiedCommerce
+                </span>
+              </div>
               <div className="py-3">
                 Already have account?
                 <a
@@ -120,7 +128,7 @@ const Signup = () => {
               </button>
               <div id="recaptcha" className="mt-2 w-2"></div>
             </div>
-            <div className="hidden md:block">
+            <div className="hidden md:block w-2/5">
               <img src={logo} alt="" />
             </div>
           </div>

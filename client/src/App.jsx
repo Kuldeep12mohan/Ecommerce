@@ -4,6 +4,7 @@ import Admin from './components/Admin';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import LandingPage from './components/LandingPage';
 function App() {
   return (
     <Router>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/user" element={<User />} />
         <Route path="/admin" element={<Admin />} />
         <Route path='/signup' element={<Signup/>}/>
+        <Route path='/landing' element={<LandingPage/>}/>
       </Routes>
     </Router>
   );
