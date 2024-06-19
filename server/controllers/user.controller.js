@@ -9,7 +9,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { io } from "../app.js";
 
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 
 const generateAccessAndRefereshTokens = async (userId) => {
   try {
@@ -249,6 +248,22 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     );
 });
 
+const placeOrders = asyncHandler(async(req,res)=>
+{
+try {
+    const {user} = req.body;
+    console.log(user);
+    io.emit('newOrder',user);
+    res.status(200)
+    .json({
+      message:'order placed successfully'
+      })
+} catch (error) {
+  throw new ApiError(401,"orders placing failed")
+}
+  
+})
+
 // const placeOrder = asyncHandler(async(req,res)=>
 // {
 
@@ -261,4 +276,5 @@ export {
   changeCurrentPassword,
   getCurrentUser,
   updateAccountDetails,
+  placeOrders
 };
