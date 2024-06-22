@@ -29,6 +29,10 @@ import userRouter from "./routes/user.route.js"
 
 app.use("/api/v1/users",userRouter)
 
+//product route setup
+import productRouter from "./routes/product.route.js"
+app.use("/api/v1/products",productRouter)
+
 
 //handling socket.io for sending real time notification
 io.on('connection', (socket) => {
