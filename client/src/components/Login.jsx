@@ -18,7 +18,7 @@ const Login = () => {
       localStorage.setItem("token", token);
       toast.success("Login Successfully");
       setTimeout(() => {
-        navigate("/landing");
+        navigate("/");
       }, 1500); 
     } catch (error) {
       console.error(error);
@@ -33,7 +33,7 @@ const Login = () => {
           <div className='text-3xl mb-4 font-bold'>Login</div>
           <div className='py-3'>
             Doesn't have an account yet?
-            <a onClick={() => navigate("/signup")} className='text-purple-600 font-bold underline'>
+            <a onClick={() => navigate("/signup")} className='text-purple-600 font-bold underline hover:cursor-pointer'>
               Sign Up
             </a>
           </div>
@@ -46,9 +46,6 @@ const Login = () => {
           <div className='flex justify-between mb-3'>
             <input type="password" placeholder='Enter 6 characters or more' className='w-full md:w-3/4 border py-2 px-2 rounded-lg' onChange={(e) => setPassword(e.target.value)} />
           </div>
-          <input type="checkbox" name="remember" id="rem" className='m-2' />
-          <label htmlFor="remember" className='py-2 px-3 mt-5'>Remember me</label>
-          <br />
           <button className='w-full md:w-3/4 py-2 mt-5 border-2 bg-purple-500 text-white font-bold hover:bg-purple-300 transition ease-linear duration-30' onClick={handleLogin}>Login</button>
         </div>
         <div className='hidden md:block'>

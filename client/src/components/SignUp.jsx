@@ -5,7 +5,7 @@ import axios from "axios";
 import OtpInput from "otp-input-react";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../firebase.config.jsx";
-
+import toast,{Toaster} from "react-hot-toast";
 const Signup = () => {
   const navigate = useNavigate();
   const [username, setUserName] = useState("");
@@ -14,10 +14,11 @@ const Signup = () => {
   const [ph, setPh] = useState("");
   const [user, setUser] = useState(null);
   const [otp, setOtp] = useState("");
-
+  const [loader,setLoader] = useState(false);
   //otp sending and verification logic
   const sendOtp = async () => {
     try {
+      setLoader(true);
       const formatPh = "+91" + ph;
       const recaptcha = new RecaptchaVerifier(auth, "recaptcha", {});
       const confirmation = await signInWithPhoneNumber(
@@ -25,6 +26,7 @@ const Signup = () => {
         formatPh,
         recaptcha
       );
+      setLoader(false);
       setUser(confirmation);
     } catch (error) {
       console.log(error);
@@ -32,6 +34,7 @@ const Signup = () => {
   };
   const verifyOtp = async () => {
     try {
+      setLoader(true);
       const data = await user.confirm(otp);
       console.log(data);
       const response = await axios.post(
@@ -39,7 +42,13 @@ const Signup = () => {
         { username, email, phone: ph, password }
       );
       console.log(response);
-      navigate("/login");
+      toast.success("registration successful")
+      setLoader(false);
+      setTimeout(()=>
+      {
+        navigate("/login");
+      },1500)
+      
     } catch (error) {
       console.error(error);
     }
@@ -54,7 +63,7 @@ const Signup = () => {
               <div className="text-3xl mb-4 font-bold">
                 Welcome to{" "}
                 <span className="bg-gradient-to-r from-orange-400 to-yellow-500 text-transparent bg-clip-text">
-                  UnifiedCommerce
+                EcomHaven
                 </span>
               </div>
               <div className="py-3">
@@ -63,7 +72,7 @@ const Signup = () => {
                   onClick={() => {
                     navigate("/signin");
                   }}
-                  className="text-purple-600 font-bold underline"
+                  className="text-purple-600 font-bold underline hover:cursor-pointer"
                 >
                   Sign in
                 </a>
@@ -115,16 +124,12 @@ const Signup = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <input type="checkbox" name="remember" id="rem" className="m-2" />
-              <label htmlFor="remember" className="py-2 px-3 mt-5">
-                Remember me
-              </label>
-              <br />
               <button
                 className="w-full md:w-3/4 py-2 mt-5  border-2 bg-purple-500 text-white font-bold hover:bg-purple-300 transition ease-linear duration-30"
                 onClick={sendOtp}
               >
-                Signup
+                {!loader?"Signup":"Loading..."}
+                
               </button>
               <div id="recaptcha" className="mt-2 w-2"></div>
             </div>
@@ -148,10 +153,11 @@ const Signup = () => {
             className="border py-2 px-5 bg-purple-500 m-2"
             onClick={verifyOtp}
           >
-            Verify otp
+            {!loader?"veryify otp":"loading..."}
           </button>
         </div>
       )}
+      <Toaster/>
     </>
   );
 };

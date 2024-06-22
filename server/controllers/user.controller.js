@@ -264,10 +264,8 @@ try {
   
 })
 
-// const placeOrder = asyncHandler(async(req,res)=>
-// {
 
-// })
+
 export {
   registerUser,
   loginUser,

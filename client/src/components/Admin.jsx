@@ -20,9 +20,14 @@ const Admin=()=> {
   }, []);
 
   return (
-    <div className='flex justify-center text-3xl font-bold items-center h-screen'>
-      <h1>Admin Page</h1>
-      <button className='border m-4 bg-emerald-600 py-4 px-6' onClick={handleNotification}>Notification--{count}</button>
+    <div className='min-h-screen p-4'>
+      <div className='sticky top-0 flex bg-black justify-between items-center p-3 shadow-md rounded-lg w-full z-20'>
+        <div className='flex'>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+
     </div>
   );
 }
